@@ -11,16 +11,12 @@ from e_commerce.models import *
 class ComicsAdmin(admin.ModelAdmin):
     # NOTE: Para seleccionar los campos en la tabla de registros
     list_display = ('marvel_id', 'title', 'stock_qty', 'price')
-
     # NOTE: Filtro lateral de elementos:
     list_filter= ('marvel_id','title')
-    
     # NOTE: Buscador de elementos en la columna:
     search_fields = ['title']
-
     # NOTE: Para seleccionar los campos en el registro. 
     #fields = ('marvel_id', 'title', 'stock_qty')
-
     # NOTE: Genera un campo desplegable con los registros seleccionados.
     fieldsets = (
         (None, {
@@ -31,13 +27,20 @@ class ComicsAdmin(admin.ModelAdmin):
             'fields': ('description','price', 'picture'),
         }),
     )
-    pass
 @admin.register(wish_list)
 class wish_listAdmin(admin.ModelAdmin):
-    list_display = ('user_id_id', 'comic_id_id', 'favorite')
-    list_filter= ('user_id_id','cart')
-    search_fields = ['user_id_id']
+    list_display = ('user_id', 'comic_id','buied_qty','wished_qty', 'cart', 'favorite')
+    list_filter= ('user_id','cart')
+    search_fields = ['user_id', 'comic_id']
 
     # # NOTE: Para seleccionar los campos en el registro. 
-    fields = ('user_id', 'comic_id', 'favorite')
-    pass
+    # fields = ('user', 'comic', 'favorite')
+    fieldsets = (
+        (None, {
+            'fields': ('user','favorite', 'wished_qty')
+        }),
+        ('Advanced options', {
+            'classes': ('collapse',),
+            'fields': ('buied_qty','cart'),
+        }),
+        )
